@@ -26,8 +26,8 @@ jobs:
     - name: Decode Keystore
       run: |
         echo "${{ secrets.SIGNING_KEY_STORE_BASE64 }}" | base64 --decode > app/keystore.jks
-    - name: Build with Gradle
-      run: ./gradlew build
+    # - name: Build with Gradle
+    #   run: ./gradlew build
     - name: Generate APK
       env:
         SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
