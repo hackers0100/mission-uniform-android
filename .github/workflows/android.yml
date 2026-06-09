@@ -25,7 +25,14 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Decode Keystore
+      run: |
+        echo "${{ secrets.SIGNING_KEY_STORE_BASE64 }}" | base64 --decode > app/keystore.jks
     - name: Generate APK
+      env:
+        SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+        SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+        SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
       run: ./gradlew assembleRelease
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v7.0.1
